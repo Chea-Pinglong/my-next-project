@@ -1,4 +1,3 @@
-
 import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { userEvent, waitFor, within } from "@storybook/testing-library";
@@ -7,7 +6,7 @@ import { expect } from "@storybook/jest";
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
-  title: "Sabaicode/Atoms/Button",
+  title: "SmakChet/atoms/Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -21,8 +20,8 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {
   args: {
     children: "Button",
-    colorScheme: "primary",
-    size: "large",
+    colorScheme: "secondary",
+    size: "small",
     onClick: action("Click !"),
   },
   play: async ({ args, canvasElement }) => {

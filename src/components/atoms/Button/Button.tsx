@@ -5,7 +5,7 @@ import React, { ReactNode, MouseEvent } from "react";
 interface ButtonProps {
   children: ReactNode;
   className?: string;
-  colorScheme?: "primary" | "secondary" | "danger" | "success";
+  colorScheme?: "primary" | "secondary" | "danger" | "success" | "warning";
   size?: "small" | "medium" | "large";
   isDisabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
@@ -29,6 +29,8 @@ const Button: React.FC<ButtonProps> = ({
         return "bg-red-500 hover:bg-red-400 text-white";
       case "success":
         return "bg-green-500 hover:bg-green-400 text-white";
+      case "warning":
+        return "bg-yellow-500 hover:bg-yellow-400 text-white"
       default:
         return "bg-blue-500 hover:bg-blue-400 text-white";
     }
