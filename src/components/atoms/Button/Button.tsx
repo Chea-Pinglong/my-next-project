@@ -6,7 +6,7 @@ interface ButtonProps {
   children: ReactNode;
   className?: string;
   colorScheme?: "primary" | "secondary" | "danger" | "success" | "warning";
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large";               
   isDisabled?: boolean;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
