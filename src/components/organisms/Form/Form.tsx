@@ -18,7 +18,7 @@ function Form() {
       />
       </div>
       <div className="ime"><p>Image</p>
-      <button className=' m-2 ms-2 me-2 border rounded-md border-y-fuchsia-200 '><p className=' text-12'>Select</p></button>
+      <button className=' m-2 ms-2 me-2 border rounded-md border-y-fuchsia-200'><p className=' text-12'>Select</p></button>
       </div>
 
     </div>

@@ -6,12 +6,12 @@ interface ModalProps {
   selectCard: string;
 }
 
-const Modal: FC<ModalProps> = ({ children, selectCard }) => {
+const Modal: FC<ModalProps> = ({ children, selectCard = "Add" }) => {
   const [isShowModal, setIsShowModal] = useState(false);
   return (
     <>
       <button
-        className="bg-blue-800  px-4 py-3 rounded-2xl"
+        className="bg-blue-800  px-5 py-3 rounded-xl ml-10"
         onClick={() => setIsShowModal(true)}
       >
         {selectCard ? "Edit" : "Add"}
