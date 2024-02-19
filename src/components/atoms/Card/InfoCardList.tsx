@@ -1,7 +1,6 @@
 import React from "react";
 import { InfoCard } from "./InfoCard";
 import { User } from "@/app/user/page";
-import Link from "next/link";
 
 interface InfoCardListProps {
   items: User[];

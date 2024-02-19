@@ -1,30 +1,31 @@
-"use client";
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
-import { User } from "@/app/user/page";
-import Image from "next/image";
+import { User } from "@/app/user";
 import { Schema } from "@/components/validations";
+import { InputForm } from "./InputForm";
+import { Input } from "./Input";
 
-interface FormAddProps {
+interface ValidationFormProps {
   addNewUser: (user: User) => void;
 }
 
-const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
+const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
   const [user, setUser] = useState({
     id: "",
     username: "",
-    profile: "",
+    profile: null,
   });
   const [error, setError] = useState({
     username: "",
     profile: "",
   });
-  const validateForm = async (name: string, value: any) => {
+
+  const validateForm = async (name: string, value: string) => {
     try {
       await Schema.validateAt(name, { [name]: value });
-      setError((pre) => ({ ...pre, [name]: "" }));
-    } catch (error: any) {
+      setError((prev) => ({ ...prev, [name]: "" }));
+    } catch (error) {
       console.log("Error: ", error);
-      setError((pre) => ({ ...pre, [name]: error.message }));
+      setError((prev) => ({ ...prev, [name]: error.message }));
     }
   };
 
@@ -40,17 +41,17 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
 
       const newId = Math.random().toString(36).substring(2, 8);
       const newUser = { ...user, id: newId };
-      addNewUser((prevUser: any) => {
-        return [...prevUser, newUser];
+      addNewUser((prevUsers: any) => {
+        return [...prevUsers, newUser];
       });
     } catch (error) {
-      console.log("Error: ", error);
-      const fieldErrors: any = {};
+      console.log("error: ", error);
+      const fieldError = {};
 
-      error.inner.forEach((err) => {
-        fieldErrors[err.path] = err.message;
+      error.inner.forEach((e) => {
+        fieldError[e.path] = e.message;
       });
-      setError(fieldErrors);
+      setError(fieldError);
       return;
     }
   };
@@ -82,49 +83,35 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
-      <label htmlFor="name">Name</label>
-      <input
-        className="text-blue-500 border rounded-md border-black m-2 focus:ring-2 outline-none px-2"
+    <InputForm className="px-10 py-5 bg-white" onSubmit={handleOnSubmit}>
+      <Input
+        className="text-black border rounded-md border-balck m-2 focus:tring-2 outline-none px-5 [y-2"
         type="text"
-        id="name"
         name="username"
         value={user.username}
+        placeholder="username"
         onChange={handleOnChange}
+        label="username"
+        error={error.username}
       />
-      {error.username && (
-        <div className="error-message text-red-500">{error.username}</div>
-      )}
-      <br />
 
-      <label htmlFor="image">Image</label>
-      <input
-        className="border rounded-md border-black m-2"
+      <Input
+        className="text-black"
         type="file"
-        accept="image/*"
         name="profile"
+        placeholder="profile"
         onChange={handleOnUploadFile}
+        label="profile"
+        error={error.profile}
       />
-      {error.username && (
-        <div className="error-message text-red-500">{error.profile}</div>
-      )}
-      <br />
-
-      <label htmlFor="preview">Image Preview</label>
-      <Image
-        src={user.profile}
-        alt="Profile Image"
-        height={120}
-        width={120}
-        className="ml-4 rounded-2xl"
-      />
-      <br />
-      <button className=" mt-3 border rounded-md border-slate-700 p-1 bg-slate-300 text-black">
+      <button
+        className="px-10 py-1 bg-green-500 rounded-full mt-5"
+        type="submit"
+      >
         Submit
       </button>
-    </form>
+    </InputForm>
   );
 };
 
-export { FormAdd };
-
+export { ValidationForm };
