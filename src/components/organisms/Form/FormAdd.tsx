@@ -2,7 +2,7 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { User } from "@/app/user/page";
 import Image from "next/image";
-import { Schema } from "@/components/validations";
+import { Schema } from "@/validations";
 
 interface FormAddProps {
   addNewUser: (user: User) => void;

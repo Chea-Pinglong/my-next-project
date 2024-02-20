@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
-import { User } from "@/app/user";
-import { Schema } from "@/components/validations";
+import { User } from "@/app/user/page";
+import { Schema } from "@/validations";
 import { InputForm } from "./InputForm";
 import { Input } from "./Input";
 

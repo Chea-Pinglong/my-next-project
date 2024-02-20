@@ -1,11 +1,7 @@
-import { Card } from "./Card";
-export { Card };
 
 import { ProfileCard } from "./ProfileCard";
 export { ProfileCard };
 
-import { CardList } from "./CardList";
-export { CardList };
 
 import { InfoCard } from "./InfoCard";
 export { InfoCard };
