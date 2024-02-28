@@ -13,9 +13,12 @@ const SearchInput = () => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <button onClick={()=>{
-        alert()
-      }} className="w-[100px] h-[40px] text-white bg-blue-900 rounded-md ml-2">
+      <button
+        onClick={() => {
+          alert();
+        }}
+        className="w-[100px] h-[40px] text-white bg-blue-900 rounded-md ml-2"
+      >
         Seach
       </button>
     </div>

@@ -3,16 +3,17 @@ import { User } from "@/app/user/page";
 import { Schema } from "@/validations";
 import { InputForm } from "./InputForm";
 import { Input } from "./Input";
+import Image from "next/image";
 
 interface ValidationFormProps {
-  addNewUser: (user: User) => void;
+  addNewUser: (user: User) => "";
 }
 
 const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
   const [user, setUser] = useState({
     id: "",
     username: "",
-    profile: null,
+    profile: "",
   });
   const [error, setError] = useState({
     username: "",
@@ -45,10 +46,10 @@ const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
         return [...prevUsers, newUser];
       });
     } catch (error) {
-      console.log("error: ", error);
+      console.log("Error: ", error);
       const fieldError = {};
 
-      error.inner.forEach((e) => {
+      error.inner.forEach((e: any) => {
         fieldError[e.path] = e.message;
       });
       setError(fieldError);
@@ -83,29 +84,43 @@ const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
   };
 
   return (
-    <InputForm className="px-10 py-5 bg-white" onSubmit={handleOnSubmit}>
+    <InputForm onSubmit={handleOnSubmit}>
       <Input
-        className="text-black border rounded-md border-balck m-2 focus:tring-2 outline-none px-5 [y-2"
+        className="text-black border rounded-md border-black m-2 outline-none px-2 "
         type="text"
         name="username"
         value={user.username}
-        placeholder="username"
         onChange={handleOnChange}
         label="username"
         error={error.username}
       />
-
+      <br />
       <Input
-        className="text-black"
+        className="text-black m-2 border border-black"
         type="file"
         name="profile"
-        placeholder="profile"
         onChange={handleOnUploadFile}
         label="profile"
         error={error.profile}
       />
+
+      {user.profile != "" ? (
+        <>
+          <div className="flex text-black">Profile</div>
+          <Image
+            className="rounded-md"
+            src={user.profile}
+            alt={""}
+            width={150}
+            height={150}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+
       <button
-        className="px-10 py-1 bg-green-500 rounded-full mt-5"
+        className=" mt-3 border rounded-md border-slate-700 py-2 px-4 bg-slate-300 text-black"
         type="submit"
       >
         Submit

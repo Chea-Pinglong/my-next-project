@@ -1,10 +1,19 @@
+import { link } from "fs";
 import Link from "next/link";
 import React from "react";
 
 const page = () => {
   return (
-    <div className="flex flex-row justify-center items-center text-5xl w-full h-screen hover:text-blue-500">
-      <Link href={"/user"}>To User</Link>
+    <div className=" w-screen h-screen flex justify-center items-center">
+      <div>
+     
+        <Link
+          href={"/user"}
+          className="bg-blue-500 px-4 py-2 rounded font-bold hover:bg-blue-700 text-white text-3xl"
+        >
+          To user
+        </Link>
+      </div>
     </div>
   );
 };

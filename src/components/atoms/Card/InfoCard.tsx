@@ -1,37 +1,40 @@
 "use client";
-import React, { Dispatch, useEffect, SetStateAction, FC } from "react";
+import React, { Dispatch, useEffect, SetStateAction, FC, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { userContext } from "@/Context/UserContext";
 
 interface InfoCardProps {
   id: string;
   image: string;
   name: string;
-  selectCard: string | null;
-  onSelectCard: Dispatch<SetStateAction<string>>;
-  onDeleteCard: Dispatch<SetStateAction<string>>;
+  // selectCard: string | null;
+  // onSelectCard: Dispatch<SetStateAction<string>>;
+  // onDeleteCard: Dispatch<SetStateAction<string>>;
 }
 
 const InfoCard: FC<InfoCardProps> = ({
   id,
   name,
   image,
-  selectCard,
-  onSelectCard,
-  onDeleteCard,
+  // selectCard,
+  // onSelectCard,
+  // onDeleteCard,
 }: InfoCardProps) => {
+  const {selectCard, setSelectCard, handleDeleteUser} = useContext(userContext);
+
+  console.log("selected card: ", selectCard)
   return (
     //Card
     <div
       onClick={() => {
         // Unselect Card
         if (selectCard == id) {
-          onSelectCard("");
+          setSelectCard("");
         } else {
           // Select Card
-          onSelectCard(id);
+          setSelectCard(id);
         }
-
       }}
       className={
         selectCard == id
@@ -65,7 +68,7 @@ const InfoCard: FC<InfoCardProps> = ({
         <button
           className="bg-red-500 px-2 py-1 rounded-md text-white "
           onClick={(e) => {
-            onDeleteCard(id);
+            handleDeleteUser(id);
             e.stopPropagation();
           }}
         >

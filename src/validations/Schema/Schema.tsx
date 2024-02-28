@@ -1,22 +1,26 @@
-import React from "react";
 import * as yup from "yup";
 yup.addMethod(yup.mixed, "fileSize", function (maxSize, message) {
-  return this.test("fileSize", message, function(value){
-    const{path, createError} = this;
+  return this.test("fileSize", message, function (value) {
+    const { path, createError } = this;
 
-    if(value && value.size > maxSize){
+    if (value && value.size > maxSize) {
       return createError({
         path,
-        message
-      })
+        message,
+      });
     }
-    return true
+
+    return true;
   });
 });
 
 const Schema = yup.object().shape({
+  
   username: yup.string().required().min(3).max(60),
-  profile: yup.mixed().required("A profile is required").fileSize(1024*1024*2, "Profile picture should be less than 2MB")
-})
+  profile: yup
+    .mixed()
+    .required("A File is Required")
+    .fileSize(1024 * 1024, "File size must be less than 1MB"),
+});
 
 export { Schema };

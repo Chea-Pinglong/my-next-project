@@ -1,36 +1,36 @@
-import React, { ChangeEvent, FC } from 'react'
-import { ErrorMessage } from './ErrorMessage'
+import React, { ChangeEvent, FC } from "react";
+import { ErrorMessage } from "./ErrorMessage";
 
-interface InputProps{
-    className?: string
-    placeholder?: string;
-    type: string
-    name: string
-    value?: string
-    label?: string
-    error: string
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+interface InputProps {
+  className?: string;
+  placeholder?: string;
+  type: string;
+  name: string;
+  value?: string;
+  label?: string;
+  error: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 const Input: FC<InputProps> = ({
-    className,
-    placeholder,
-    type,
-    label,
-    name,
-    value,
-    onChange,
-    error
+  className,
+  placeholder,
+  type,
+  name,
+  value,
+  onChange,
+  label,
+  error,
 }) => {
-    console.log('error: ', error);
+  console.log("Error: ", error);
   return (
     <>
-    {label === name &&(
-        <label htmlFor={label} className='text_black'>
-            {label}
+      {label === name && (
+        <label htmlFor={label} className="text-black">
+          {label}
         </label>
-    )}
+      )}
 
-    <input
+      <input
         type={type}
         name={name}
         placeholder={placeholder}
@@ -39,10 +39,9 @@ const Input: FC<InputProps> = ({
         onChange={onChange}
       />
 
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </>
-  )
-}
+  );
+};
 
-export {Input}
+export { Input };

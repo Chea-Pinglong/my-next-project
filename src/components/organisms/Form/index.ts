@@ -24,3 +24,6 @@ export { Label }
 
 import { SearchInput } from "./SearchInput";
 export { SearchInput }
+
+import { ValidationForm } from "./ValidationForm";
+export {ValidationForm}

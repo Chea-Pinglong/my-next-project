@@ -12,7 +12,7 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
   const [user, setUser] = useState({
     id: "",
     username: "",
-    profile: "",
+    profile: null,
   });
   const [error, setError] = useState({
     username: "",
@@ -22,7 +22,7 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
     try {
       await Schema.validateAt(name, { [name]: value });
       setError((pre) => ({ ...pre, [name]: "" }));
-    } catch (error: any) {
+    } catch (error) {
       console.log("Error: ", error);
       setError((pre) => ({ ...pre, [name]: error.message }));
     }
@@ -47,7 +47,7 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
       console.log("Error: ", error);
       const fieldErrors: any = {};
 
-      error.inner.forEach((err) => {
+      error.inner.forEach((err: { path: string | number; message: any; }) => {
         fieldErrors[err.path] = err.message;
       });
       setError(fieldErrors);
@@ -99,10 +99,11 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
 
       <label htmlFor="image">Image</label>
       <input
-        className="border rounded-md border-black m-2"
+        className="rounded-md m-2"
         type="file"
         accept="image/*"
         name="profile"
+        placeholder="Upload an image"
         onChange={handleOnUploadFile}
       />
       {error.username && (
@@ -110,15 +111,6 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
       )}
       <br />
 
-      <label htmlFor="preview">Image Preview</label>
-      <Image
-        src={user.profile}
-        alt="Profile Image"
-        height={120}
-        width={120}
-        className="ml-4 rounded-2xl"
-      />
-      <br />
       <button className=" mt-3 border rounded-md border-slate-700 p-1 bg-slate-300 text-black">
         Submit
       </button>
@@ -127,4 +119,3 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
 };
 
 export { FormAdd };
-
