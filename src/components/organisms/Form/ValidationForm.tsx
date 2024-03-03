@@ -1,63 +1,55 @@
-import React, { ChangeEvent, FC, FormEvent, useState } from "react";
+import React, { ChangeEvent, FC, FormEvent, useContext, useState } from "react";
 import { User } from "@/app/user/page";
-import { Schema } from "@/validations";
+import { Schema } from "@/validations/Schema";
 import { InputForm } from "./InputForm";
 import { Input } from "./Input";
 import Image from "next/image";
+import { UserContext, UserModel } from "@/Context/UserContext";
+import { validate } from "@/validations/validations";
 
-interface ValidationFormProps {
-  addNewUser: (user: User) => "";
+interface FormAddProps {
+  addNewUser: (user: UserModel) => "";
 }
 
-const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
+const ValidationForm = () => {
+  const { addNewUser } = useContext(UserContext);
   const [user, setUser] = useState({
-    id: "",
     username: "",
     profile: "",
   });
-  const [error, setError] = useState({
+  const [errors, setErrors] = useState({
     username: "",
     profile: "",
   });
 
-  const validateForm = async (name: string, value: string) => {
-    try {
-      await Schema.validateAt(name, { [name]: value });
-      setError((prev) => ({ ...prev, [name]: "" }));
-    } catch (error) {
-      console.log("Error: ", error);
-      setError((prev) => ({ ...prev, [name]: error.message }));
-    }
-  };
+  // const validateForm = async (name: string, value: string) => {
+  //   try {
+  //     await Schema.validateAt(name, { [name]: value });
+  //     setError((prev) => ({ ...prev, [name]: "" }));
+  //   } catch (error) {
+  //     console.log("Error: ", error);
+  //     setError((prev) => ({ ...prev, [name]: error.message }));
+  //   }
+  // };
 
   const handleOnSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (error.profile) {
+    if (errors.profile) {
       return;
     }
 
     try {
-      await Schema.validate(user, { abortEarly: false });
-
-      const newId = Math.random().toString(36).substring(2, 8);
-      const newUser = { ...user, id: newId };
-      addNewUser((prevUsers: any) => {
-        return [...prevUsers, newUser];
-      });
-    } catch (error) {
+      await validate(Schema, user);
+      addNewUser(user);
+    } catch (error: any) {
       console.log("Error: ", error);
-      const fieldError = {};
-
-      error.inner.forEach((e: any) => {
-        fieldError[e.path] = e.message;
-      });
-      setError(fieldError);
-      return;
+      setErrors(error);
     }
   };
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  // get value from input
+  const handleOnChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => {
       return {
@@ -65,16 +57,22 @@ const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
         [name]: value,
       };
     });
-    validateForm(name, value);
+    try {
+      await validate(Schema, user);
+    } catch (error: any) {
+      setErrors(error);
+    }
   };
 
-  const handleOnUploadFile = (e: FormEvent<HTMLInputElement>) => {
+  const handleOnUploadFile = (
+    e: FormEvent<HTMLInputElement | HTMLFormElement>
+  ) => {
     const file = e.target.files[0];
 
-    validateForm(e.target.name, file);
+    validate(e.target.name, file);
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      setUser((prevUser) => {
+      setUser((prevUser: any) => {
         return {
           ...prevUser,
           profile: imageUrl,
@@ -92,7 +90,7 @@ const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
         value={user.username}
         onChange={handleOnChange}
         label="username"
-        error={error.username}
+        error={errors.username}
       />
       <br />
       <Input
@@ -101,7 +99,7 @@ const ValidationForm = ({ addNewUser }: ValidationFormProps) => {
         name="profile"
         onChange={handleOnUploadFile}
         label="profile"
-        error={error.profile}
+        error={errors.profile}
       />
 
       {user.profile != "" ? (

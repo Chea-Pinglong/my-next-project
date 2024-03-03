@@ -1,14 +1,16 @@
-import React, { FC, ReactNode, useState } from "react";
+import React, { FC, ReactNode, useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FloatingButton } from "@/components";
+import { UserContext } from "@/Context/UserContext";
 
 interface ModalProps {
   children?: ReactNode;
-  selectCard: string;
+  selectCard?: string;
 }
 
-const Modal: FC<ModalProps> = ({ children, selectCard = "Add" }) => {
+const Modal: FC<ModalProps> = ({ children }) => {
   const [isShowModal, setIsShowModal] = useState(false);
+  const { selectCard } = useContext(UserContext);
   return (
     <>
       <FloatingButton
@@ -17,6 +19,18 @@ const Modal: FC<ModalProps> = ({ children, selectCard = "Add" }) => {
       >
         {selectCard ? "Edit" : "Add"}
       </FloatingButton>
+
+      {/* <FloatingButton position="top-left" size="large">
+        {selectCard ? "Delete" : ""}
+      </FloatingButton> */}
+
+      {selectCard ? (
+        <FloatingButton position="top-left">
+          Delete all accept this{" "}
+        </FloatingButton>
+      ) : (
+        ""
+      )}
 
       {isShowModal && (
         <>

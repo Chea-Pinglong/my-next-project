@@ -2,7 +2,8 @@
 import React, { ChangeEvent, FC, FormEvent, useState } from "react";
 import { User } from "@/app/user/page";
 import Image from "next/image";
-import { Schema } from "@/validations";
+// import { Schema } from "@/validations";
+import {Schema} from "@/validations/Schema"
 
 interface FormAddProps {
   addNewUser: (user: User) => void;
@@ -40,14 +41,14 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
 
       const newId = Math.random().toString(36).substring(2, 8);
       const newUser = { ...user, id: newId };
-      addNewUser((prevUser: any) => {
+      addNewUser((prevUser) => {
         return [...prevUser, newUser];
       });
     } catch (error) {
       console.log("Error: ", error);
       const fieldErrors: any = {};
 
-      error.inner.forEach((err: { path: string | number; message: any; }) => {
+      error.inner.forEach((err: { path: string | number; message: string; }) => {
         fieldErrors[err.path] = err.message;
       });
       setError(fieldErrors);
@@ -55,6 +56,7 @@ const FormAdd: FC<FormAddProps> = ({ addNewUser }) => {
     }
   };
 
+  // get value from input
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => {

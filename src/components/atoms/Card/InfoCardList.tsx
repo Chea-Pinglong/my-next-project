@@ -1,7 +1,7 @@
 import React, { Dispatch, useContext } from "react";
 import { InfoCard } from "./InfoCard";
 import { User } from "@/app/user/page";
-import { userContext } from "@/Context/UserContext";
+import { UserContext } from "@/Context/UserContext";
 
 // interface InfoCardListProps {
 //   items: User[];
@@ -20,7 +20,7 @@ const InfoCardList = (
 // }: 
 // InfoCardListProps
 ) => {
-  const {users} = useContext(userContext)
+  const {users} = useContext(UserContext)
   return (
     <div>
       {users.map((item, index) => (

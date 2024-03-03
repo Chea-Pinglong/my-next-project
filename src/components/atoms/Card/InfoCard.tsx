@@ -1,29 +1,37 @@
 "use client";
-import React, { Dispatch, useEffect, SetStateAction, FC, useContext } from "react";
+import React, {
+  Dispatch,
+  useEffect,
+  SetStateAction,
+  FC,
+  useContext,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { userContext } from "@/Context/UserContext";
+import { UserContext } from "@/Context/UserContext";
 
 interface InfoCardProps {
   id: string;
   image: string;
   name: string;
-  // selectCard: string | null;
-  // onSelectCard: Dispatch<SetStateAction<string>>;
-  // onDeleteCard: Dispatch<SetStateAction<string>>;
+  selectCard: string | null;
+  onSelectCard: Dispatch<SetStateAction<string>>;
+  onDeleteCard: Dispatch<SetStateAction<string>>;
 }
 
 const InfoCard: FC<InfoCardProps> = ({
   id,
   name,
   image,
-  // selectCard,
-  // onSelectCard,
-  // onDeleteCard,
-}: InfoCardProps) => {
-  const {selectCard, setSelectCard, handleDeleteUser} = useContext(userContext);
+}: 
+// selectCard,
+// onSelectCard,
+// onDeleteCard,
+InfoCardProps) => {
+  const { selectCard, setSelectCard, handleDeleteUser } =
+    useContext(UserContext);
 
-  console.log("selected card: ", selectCard)
+  console.log("selected card: ", selectCard);
   return (
     //Card
     <div
@@ -38,7 +46,7 @@ const InfoCard: FC<InfoCardProps> = ({
       }}
       className={
         selectCard == id
-          ? "flex justify-between items-start w-[620px] bg-blue-400 text-white m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
+          ? "flex justify-between items-start w-[620px] bg-gray-100 text-white m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg "
           : "flex justify-between items-start w-[620px]  m-auto mt-5 p-2 border border-[#d6c2e7] rounded-lg hover:bg-gray-200"
       }
     >

@@ -8,8 +8,8 @@ import {
   SearchInput,
 } from "@/components";
 import { ValidationForm } from "@/components";
-import { UserProvider } from "@/Context/UserContext";
-import { userContext } from "@/Context/UserContext";
+import { UserContext, UserProvider } from "@/Context/UserContext";
+
 
 export interface User {
   id: string;
@@ -59,7 +59,7 @@ export default function Home() {
 }
 
 const MyComponent  = () => {
-  const {selectCard} = useContext(userContext);
+  const {selectCard} = useContext(UserContext);
 
   return(
     <div>

@@ -6,33 +6,40 @@ import React, {
   useState,
   FormEvent,
   ChangeEvent,
+  useContext,
 } from "react";
 import Image from "next/image";
+import { UserContext, UserModel } from "@/Context/UserContext";
 
-interface FormAddProps {
-  updateUser: Dispatch<SetStateAction<User[]>>;
-  selectedUser: User;
-}
+// interface FormAddProps {
+//   updateUser: Dispatch<SetStateAction<User[]>>;
+//   selectedUser: User;
+// }
 
-const FormUpdate: FC<FormAddProps> = ({ updateUser, selectedUser }) => {
+const FormUpdate = () => {
+ const {users, selectCard,updateUser} = useContext(UserContext);
+
+ const selectedUser = users.find((user)=>user.id == selectCard) as UserModel;
+
   const [user, setUser] = useState({
     username: selectedUser.username,
     profile: selectedUser.profile,
-  });
+  })
 
-  const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
+ const handleOnSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateUser((prevUsers) => {
-      return prevUsers.map((prevUser) => {
-        if (prevUser.id === selectedUser.id) {
-          return {
-            ...prevUser,
-            ...user,
-          };
-        }
-        return prevUser;
-      });
-    });
+    // updateUser((prevUsers) => {
+    //   return prevUsers.map((prevUser) => {
+    //     if (prevUser.id === selectedUser.id) {
+    //       return {
+    //         ...prevUser,
+    //         ...user,
+    //       };
+    //     }
+    //     return prevUser;
+    //   });
+    // });
+    updateUser(user,selectCard);
   };
 
   // Get the value from the input fields:
@@ -45,7 +52,7 @@ const FormUpdate: FC<FormAddProps> = ({ updateUser, selectedUser }) => {
     });
   };
 
-  const handleOnUploadFile = (e: FormEvent<HTMLInputElement>) => {
+  const handleOnUploadFile = (e: FormEvent<HTMLInputElement | HTMLFormElement>) => {
     const file = e.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
